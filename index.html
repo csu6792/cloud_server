@@ -1,0 +1,15 @@
+<script>
+    // 1. 取得當前網址列的 sid 參數
+    const urlParams = new URLSearchParams(window.location.search);
+    const sid = urlParams.get('sid');
+
+    // 2. 這是你當天啟動 Tunnel 得到的隨機網址
+    const tunnelBase = "https://your-random-id.trycloudflare.com";
+
+    if (sid) {
+        // 3. 自動跳轉到正確的家長頁面
+        window.location.replace(`${tunnelBase}/parent/${sid}`);
+    } else {
+        document.body.innerHTML = "無效的連結，請重新掃描 QR Code";
+    }
+</script>
