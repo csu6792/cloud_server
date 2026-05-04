@@ -1,16 +1,38 @@
-<script>
-    // 1. 取得當前網址列的 sid 參數
-    const urlParams = new URLSearchParams(window.location.search);
-    const sid = urlParams.get('sid');
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 防止瀏覽器快取這個跳轉頁面 -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>系統導向中...</title>
+</head>
+<body>
+    <div id="status" style="text-align: center; margin-top: 50px; font-family: sans-serif; color: #666;">
+        正在連接 AI 通報系統...
+    </div>
 
-    // 2. 這是你當天啟動 Tunnel 得到的隨機網址
-    const tunnelBase = "https://minority-patch-easter-never.trycloudflare.com";
+    <script>
+        // 1. 取得參數
+        const urlParams = new URLSearchParams(window.location.search);
+        const sid = urlParams.get('sid');
 
-    if (sid) {
-        // 3. 自動跳轉到正確的家長頁面
-        window.location.replace(`${tunnelBase}/teacher`);
-        //window.location.replace(`${tunnelBase}/parent/${sid}`);
-    } else {
-        document.body.innerHTML = "無效的連結，請重新掃描 QR Code";
-    }
-</script>
+        // 2. 隨機網址 (每次重開 Cloudflared 都要回來改這裡並 Push)
+        const tunnelBase = "https://minority-patch-easter-never.trycloudflare.com";
+
+        if (sid) {
+            // 3. 執行跳轉
+            // 測試環境改為 /teacher，正式環境請改回 /parent/${sid}
+            //const target = `${tunnelBase}/parent/${sid}`;
+            const target = `${tunnelBase}/teacher`;
+            
+            console.log("跳轉至:", target);
+            window.location.replace(target);
+        } else {
+            document.getElementById('status').innerHTML = "❌ 無效連結<br>請重新掃描 QR Code";
+        }
+    </script>
+</body>
+</html>
